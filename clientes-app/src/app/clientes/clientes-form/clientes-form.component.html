@@ -1,20 +1,50 @@
 <h1 class="mt-4">Clientes</h1>
 <ol class="breadcrumb mb-4">
-  <li class="breadcrumb-item active">Cadastro</li>
+  <li class="breadcrumb-item active">
+    {{ cliente.id ? "Edição" : "Cadastro" }}
+  </li>
 </ol>
 <div class="container">
   <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
     <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success" role="alert" *ngIf="success">
+          Cliente salvo/atualizado com sucesso!
+        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          *ngFor="let error of errors"
+        >
+          {{ error }}
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="cliente.id">
       <div class="col-md-6">
         <div class="form-group">
           <label for="">ID:</label>
-          <input type="text" class="form-control" [ngModel]="cliente.id" name="id" disabled>
+          <input
+            type="text"
+            class="form-control"
+            [ngModel]="cliente.id"
+            name="id"
+            disabled
+          />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="">Data cadastro</label>
-          <input type="text" class="form-control" [ngModel]="cliente.dataCadastro" name="dataCadastro" disabled>
+          <label for=""
+            >Data {{ cliente.id ? "atualização" : "cadastro" }}</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            [ngModel]="cliente.dataCadastro"
+            name="dataCadastro"
+            disabled
+          />
         </div>
       </div>
     </div>
@@ -22,25 +52,56 @@
       <div class="col-md-6">
         <div class="form-group">
           <label for="">* Nome: </label>
-          <input type="text" class="form-control" [(ngModel)]="cliente.nome" name="nome">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="cliente.nome"
+            name="nome"
+          />
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
           <label for="">* CPF:</label>
-          <input type="text" class="form-control" [(ngModel)]="cliente.cpf" name="cpf">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="cliente.cpf"
+            name="cpf"
+          />
         </div>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-2">
-        <button type="submit" class="btn btn-success d-flex align-items-center justify-content-center">
+      <div class="col-md-1 mr-2">
+        <button
+          type="button"
+          class="btn btn-secondary d-flex align-items-center justify-content-center"
+          (click)="voltarParaListagem()"
+        >
+          <i class="fa fa-arrow-alt-circle-left mr-2"></i>
+          Voltar
+        </button>
+      </div>
+      <div class="col-md-1">
+        <button
+          *ngIf="!cliente.id"
+          type="submit"
+          class="btn btn-success d-flex align-items-center justify-content-center"
+        >
           <i class="fa fa-save mr-2"></i>
           Salvar
         </button>
+        <button
+          *ngIf="cliente.id"
+          type="submit"
+          class="btn btn-success d-flex align-items-center justify-content-center"
+        >
+          <i class="fa fa-sync-alt mr-2"></i>
+          Atualizar
+        </button>
       </div>
     </div>
-
   </form>
 </div>
